@@ -202,6 +202,17 @@ export class GridStack {
    */
   public static renderCB?: RenderFcn = (el: HTMLElement, w: GridStackNode) => { if (el && w?.content) el.textContent = w.content; };
 
+  /** @internal stores the optional, per-instance renderCB function */
+  private _renderCB?: RenderFcn;
+  /** an optional, per-instance implementation of renderCB */
+  public get renderCB(): RenderFcn {
+    return this._renderCB ?? GridStack.renderCB;
+  }
+  /** set a per-instance implementation of renderCB */
+  public set renderCB(cb: RenderFcn) {
+    this._renderCB = cb;
+  }
+
   /** callback to use for resizeToContent instead of the built in one */
   public static resizeToContentCB?: ResizeToContentFcn;
   /** parent class for sizing content. defaults to '.grid-stack-item-content' */

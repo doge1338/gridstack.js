@@ -3,7 +3,6 @@
  * Copyright (c) 2021-2024 Alain Dumesny - see GridStack root license
  */
 
-import { GridStack } from './gridstack';
 import { GridStackElement, GridStackNode, GridStackOptions, numberOrString, GridStackPosition, GridStackWidget } from './types';
 
 export interface HeightData {
@@ -121,11 +120,11 @@ export class Utils {
         n.visibleObservable = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) {
           n.visibleObservable?.disconnect();
           delete n.visibleObservable;
-          GridStack.renderCB(cont, n)
+          n.grid.renderCB(cont, n)
         }});
         window.setTimeout(() => n.visibleObservable?.observe(el)); // wait until callee sets position attributes
       }
-    } else GridStack.renderCB(cont, n);
+    } else n.grid.renderCB(cont, n);
 
     return el;
   }
@@ -582,7 +581,7 @@ export class Utils {
       button: 0,
       relatedTarget: e.target
     });
-  
+
     (target || e.target).dispatchEvent(simulatedEvent);
   }
 
